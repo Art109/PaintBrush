@@ -259,7 +259,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jpPaintMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpPaintMouseReleased
         // TODO add your handling code here:
         if (tipoFigura == TipoFigura.tpRetangulo) {
-            JColorChooser escolheCor = new JColorChooser();
+            
             Color novaCor = JColorChooser.showDialog(null, "Escolha uma cor: ", Color.BLACK);
             
             r.base = evt.getX() - r.x;
