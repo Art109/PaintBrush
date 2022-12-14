@@ -7,6 +7,7 @@ package javaapplication1;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
+import javax.swing.JColorChooser;
 
 /**
  *
@@ -258,10 +259,13 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jpPaintMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpPaintMouseReleased
         // TODO add your handling code here:
         if (tipoFigura == TipoFigura.tpRetangulo) {
+            JColorChooser escolheCor = new JColorChooser();
+            Color novaCor = JColorChooser.showDialog(null, "Escolha uma cor: ", Color.BLACK);
+            
             r.base = evt.getX() - r.x;
             r.largura = evt.getY()- r.y;       
             r.cor = jpCor.getBackground();
-            r.corInterna = jpCorInterna.getBackground();
+            r.corInterna = novaCor;
             r.showArea = cbArea.getState();
             r.desenhar(jpPaint.getGraphics());
         }
