@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 import javax.swing.JColorChooser;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -15,6 +17,9 @@ import javax.swing.JColorChooser;
  */
 public class NewJFrame extends javax.swing.JFrame {
 
+    Color corAtual1;
+    Color corAtual2;
+    
     enum TipoFigura {tpPonto,tpRetangulo};
     
     Ponto p = new Ponto();
@@ -41,12 +46,13 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         canvas1 = new java.awt.Canvas();
         jpPaint = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        BtnPonto = new javax.swing.JButton();
         cbArea = new java.awt.Checkbox();
-        jpCor = new javax.swing.JPanel();
-        jpCorInterna = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jColorChooser1 = new javax.swing.JColorChooser();
+        jpCor1 = new javax.swing.JPanel();
+        jpCor2 = new javax.swing.JPanel();
+        BtnRet = new javax.swing.JButton();
+        BtnCor1 = new javax.swing.JButton();
+        BtnCor2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 204));
@@ -88,52 +94,66 @@ public class NewJFrame extends javax.swing.JFrame {
         jpPaint.setLayout(jpPaintLayout);
         jpPaintLayout.setHorizontalGroup(
             jpPaintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         jpPaintLayout.setVerticalGroup(
             jpPaintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 442, Short.MAX_VALUE)
+            .addGap(0, 680, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Ponto");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnPonto.setText("Ponto");
+        BtnPonto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                BtnPontoMouseClicked(evt);
             }
         });
 
         cbArea.setLabel("área");
 
-        jpCor.setBackground(new java.awt.Color(255, 0, 0));
+        jpCor1.setBackground(new java.awt.Color(255, 0, 0));
 
-        javax.swing.GroupLayout jpCorLayout = new javax.swing.GroupLayout(jpCor);
-        jpCor.setLayout(jpCorLayout);
-        jpCorLayout.setHorizontalGroup(
-            jpCorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 146, Short.MAX_VALUE)
+        javax.swing.GroupLayout jpCor1Layout = new javax.swing.GroupLayout(jpCor1);
+        jpCor1.setLayout(jpCor1Layout);
+        jpCor1Layout.setHorizontalGroup(
+            jpCor1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 83, Short.MAX_VALUE)
         );
-        jpCorLayout.setVerticalGroup(
-            jpCorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 33, Short.MAX_VALUE)
-        );
-
-        jpCorInterna.setBackground(new java.awt.Color(255, 255, 0));
-
-        javax.swing.GroupLayout jpCorInternaLayout = new javax.swing.GroupLayout(jpCorInterna);
-        jpCorInterna.setLayout(jpCorInternaLayout);
-        jpCorInternaLayout.setHorizontalGroup(
-            jpCorInternaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 146, Short.MAX_VALUE)
-        );
-        jpCorInternaLayout.setVerticalGroup(
-            jpCorInternaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 32, Short.MAX_VALUE)
+        jpCor1Layout.setVerticalGroup(
+            jpCor1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jButton2.setText("Retângulo");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jpCor2.setBackground(new java.awt.Color(255, 255, 0));
+
+        javax.swing.GroupLayout jpCor2Layout = new javax.swing.GroupLayout(jpCor2);
+        jpCor2.setLayout(jpCor2Layout);
+        jpCor2Layout.setHorizontalGroup(
+            jpCor2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 83, Short.MAX_VALUE)
+        );
+        jpCor2Layout.setVerticalGroup(
+            jpCor2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        BtnRet.setText("Retângulo");
+        BtnRet.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                BtnRetMouseClicked(evt);
+            }
+        });
+
+        BtnCor1.setText("Cor 1");
+        BtnCor1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnCor1MouseClicked(evt);
+            }
+        });
+
+        BtnCor2.setText("Cor 2");
+        BtnCor2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnCor2MouseClicked(evt);
             }
         });
 
@@ -142,24 +162,27 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(196, 196, 196)
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnPonto)
+                    .addComponent(BtnRet)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(196, 196, 196)
-                                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
+                                .addComponent(BtnCor2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jpCor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jpCorInterna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jpCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpPaint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(882, Short.MAX_VALUE))
+                                .addComponent(BtnCor1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jpCor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(66, 66, 66)
+                .addComponent(jpPaint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(412, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,21 +190,25 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jpPaint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(BtnPonto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(BtnRet)
                         .addGap(21, 21, 21)
                         .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(244, 244, 244)
-                        .addComponent(jpCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jpCorInterna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jpPaint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                        .addGap(197, 197, 197)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jpCor1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnCor1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jpCor2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnCor2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(413, 413, 413))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -191,7 +218,7 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,22 +256,22 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel1MouseReleased
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void BtnPontoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnPontoMouseClicked
         // TODO add your handling code here:
         tipoFigura = TipoFigura.tpPonto;  
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_BtnPontoMouseClicked
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void BtnRetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRetMouseClicked
         // TODO add your handling code here:
         tipoFigura = TipoFigura.tpRetangulo;  
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_BtnRetMouseClicked
 
     private void jpPaintMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpPaintMousePressed
         // TODO add your handling code here:
         if (tipoFigura == TipoFigura.tpPonto){
             p.x = evt.getX();
             p.y = evt.getY();
-            p.cor = jpCor.getBackground();
+            p.cor = jpCor1.getBackground();
             p.desenhar(jpPaint.getGraphics());
         }
         else if (tipoFigura == TipoFigura.tpRetangulo) {
@@ -260,17 +287,27 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (tipoFigura == TipoFigura.tpRetangulo) {
             
-            Color novaCor = JColorChooser.showDialog(null, "Escolha uma cor: ", Color.BLACK);
+            //r.corInterna = JColorChooser.showDialog(null, "Escolha uma cor: ", Color.BLACK);
             
             r.base = evt.getX() - r.x;
             r.largura = evt.getY()- r.y;       
-            r.cor = jpCor.getBackground();
-            r.corInterna = novaCor;
+            r.cor = jpCor1.getBackground();
+            r.corInterna = corAtual2;
             r.showArea = cbArea.getState();
             r.desenhar(jpPaint.getGraphics());
         }
     }//GEN-LAST:event_jpPaintMouseReleased
 
+    private void BtnCor1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCor1MouseClicked
+        corAtual1 = JColorChooser.showDialog(null, "Escolha uma cor: ", Color.BLACK);
+        jpCor1.setBackground(corAtual1);
+    }//GEN-LAST:event_BtnCor1MouseClicked
+
+    private void BtnCor2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCor2MouseClicked
+        corAtual2 = JColorChooser.showDialog(null, "Escolha uma cor: ", Color.BLACK);
+        jpCor2.setBackground(corAtual2);
+    }//GEN-LAST:event_BtnCor2MouseClicked
+    
     /**
      * @param args the command line arguments
      */
@@ -307,14 +344,15 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnCor1;
+    private javax.swing.JButton BtnCor2;
+    private javax.swing.JButton BtnPonto;
+    private javax.swing.JButton BtnRet;
     private java.awt.Canvas canvas1;
     private java.awt.Checkbox cbArea;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jpCor;
-    private javax.swing.JPanel jpCorInterna;
+    private javax.swing.JPanel jpCor1;
+    private javax.swing.JPanel jpCor2;
     private javax.swing.JPanel jpPaint;
     // End of variables declaration//GEN-END:variables
 }
